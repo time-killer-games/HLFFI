@@ -56,7 +56,7 @@ FFI_API const char* gmffi_raw_library_load(const char* slibpath) {
     libhandle = NULL;
     libok = 0;
     
-#ifdef GMFFI_WIN32
+#ifdef _WIN32
     memset(gmffi_tmpbuff3, 0, sizeof(gmffi_tmpbuff3));
     MultiByteToWideChar(CP_UTF8, 0, slibpath, -1, gmffi_tmpbuff3, sizeof(gmffi_tmpbuff3) / sizeof(gmffi_tmpbuff3[0]));
     libhandle = (void*)(LoadLibraryW(gmffi_tmpbuff3));
@@ -89,7 +89,7 @@ FFI_API const char* gmffi_raw_library_resolve(const char* slibhandle, const char
     libhandle = NULL;
     sscanf(slibhandle, "%p", &libhandle);
 
-#ifdef GMFFI_WIN32
+#ifdef _WIN32
     funcaddr = (void*)(GetProcAddress((HMODULE)(libhandle), sfuncname));
 #else
     funcaddr = (void*)(dlsym(libhandle, sfuncname));
