@@ -9,7 +9,7 @@
 #ifndef FFI_API
 #define FFI_API __declspec(dllexport)
 #endif
-static WCHAR gmffi_tmpbuff3[65536];
+static wchar_t gmffi_tmpbuff3[65536];
 #else
 #include <dlfcn.h>
 #ifndef FFI_API
