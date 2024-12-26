@@ -1,20 +1,21 @@
 /* gmffi begin */
 #ifndef _GMFFI_C_
 #define _GMFFI_C_ 1
-
-/*
-
-    Place me into libffi/include/
-    Open libffi/src/closure.c
-    Add #include <gmffi.c>
-    at the end.
-    
-    Try to build it.
-    Open gmffi_raw_abi and comment out the ABIs it complains about.
-    Rebuild.
-    Enjoy.
-
-*/
+#include <ffi.h>
+#include <string.h>
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#ifndef FFI_API
+#define FFI_API __declspec(dllexport)
+#endif
+static WCHAR gmffi_tmpbuff3[65536];
+#else
+#include <dlfcn.h>
+#ifndef FFI_API
+#define FFI_API __attribute__((visibility("default")))
+#endif
+#endif
 
 FFI_API double gmffi_raw_sizeof_ptr() {
     return ( (double)(sizeof(char*)) );
@@ -41,14 +42,6 @@ enum HLFFIType {
 static char gmffi_tmpbuff[32];
 static char gmffi_tmpbuff2[32];
 static char gmffi_tmpbuff4[32];
-
-#ifdef GMFFI_WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-static WCHAR gmffi_tmpbuff3[65536];
-#else
-#include <dlfcn.h>
-#endif
 
 #include <stdio.h>
 
@@ -214,6 +207,7 @@ FFI_API double gmffi_raw_abi(const char* sabiname) {
     if (strcmp(sabiname, "FFI_LAST_ABI") == 0) { fabiret = FFI_LAST_ABI; goto lbl_done; }
     // custom, comment out individually when it errors out:
     if (strcmp(sabiname, "FFI_WIN64") == 0) { fabiret = FFI_WIN64; goto lbl_done; }
+#ifdef _WIN32
     if (strcmp(sabiname, "FFI_EFI64") == 0) { fabiret = FFI_EFI64; goto lbl_done; }
     if (strcmp(sabiname, "FFI_GNUW64") == 0) { fabiret = FFI_GNUW64; goto lbl_done; }
     if (strcmp(sabiname, "FFI_SYSV") == 0) { fabiret = FFI_SYSV; goto lbl_done; }
@@ -224,6 +218,7 @@ FFI_API double gmffi_raw_abi(const char* sabiname) {
     if (strcmp(sabiname, "FFI_PASCAL") == 0) { fabiret = FFI_PASCAL; goto lbl_done; }
     if (strcmp(sabiname, "FFI_REGISTER") == 0) { fabiret = FFI_REGISTER; goto lbl_done; }
     if (strcmp(sabiname, "FFI_VFP") == 0) { fabiret = FFI_VFP; goto lbl_done; }
+#endif
     // we're done here.
     
 lbl_done:
