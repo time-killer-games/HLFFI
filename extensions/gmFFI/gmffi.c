@@ -206,8 +206,8 @@ FFI_API double gmffi_raw_abi(const char* sabiname) {
     if (strcmp(sabiname, "FFI_FIRST_ABI") == 0) { fabiret = FFI_FIRST_ABI; goto lbl_done; }
     if (strcmp(sabiname, "FFI_LAST_ABI") == 0) { fabiret = FFI_LAST_ABI; goto lbl_done; }
     // custom, comment out individually when it errors out:
-    if (strcmp(sabiname, "FFI_WIN64") == 0) { fabiret = FFI_WIN64; goto lbl_done; }
 #ifdef _WIN32
+    if (strcmp(sabiname, "FFI_WIN64") == 0) { fabiret = FFI_WIN64; goto lbl_done; }
     if (strcmp(sabiname, "FFI_EFI64") == 0) { fabiret = FFI_EFI64; goto lbl_done; }
     if (strcmp(sabiname, "FFI_GNUW64") == 0) { fabiret = FFI_GNUW64; goto lbl_done; }
     if (strcmp(sabiname, "FFI_SYSV") == 0) { fabiret = FFI_SYSV; goto lbl_done; }
