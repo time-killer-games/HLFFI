@@ -27,5 +27,5 @@ printf_str("omg %s\n", "candy!!!!");
 
 var wedidntstartthefire = "https://www.youtube.com/watch?v=dGZLYB-ay34";
 if (os_type == os_windows) system("start " + wedidntstartthefire);
-if (os_type == os_macosx) system("open " + wedidntstartthefire); 
+else if (os_type == os_macosx) system("open " + wedidntstartthefire); 
 else system("xdg-open " + wedidntstartthefire);
