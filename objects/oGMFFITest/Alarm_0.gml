@@ -1,6 +1,6 @@
 /// @description fun[ction]
 
-libc = new HLFFILibrary().Load((os_type == os_windows) ? "msvcrt.dll" : "libc.so");
+libc = new HLFFILibrary().Load((os_type == os_windows) ? "msvcrt.dll" : ((os_type == os_macosx) ? "libSystem.dylib" : "libc.so"));
 printf_symbol = libc.ResolveSymbol("printf");
 printf_int_dbl = printf_symbol.DefineFunction(
     HLFFIType.TInt32, // return type
@@ -27,4 +27,5 @@ printf_str("omg %s\n", "candy!!!!");
 
 var wedidntstartthefire = "https://www.youtube.com/watch?v=dGZLYB-ay34";
 if (os_type == os_windows) system("start " + wedidntstartthefire);
+if (os_type == os_macosx) system("open " + wedidntstartthefire); 
 else system("xdg-open " + wedidntstartthefire);
